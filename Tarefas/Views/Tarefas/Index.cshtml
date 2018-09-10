@@ -1,0 +1,38 @@
+@model TarefaViewModel;
+
+@{
+    ViewData["Title"] = "Gerenciar lista de tarefas";
+}
+
+<div class="panel panel-default tarefa-panel">
+    <div class="panel-heading">@ViewData["Title"]</div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td></td>
+                <td>Tarefa</td>
+                <td>Previsão</td>
+            </tr>
+        </thead>
+        @foreach(var item in Model.TarefaItens)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" name="@item.Id" checked="@item.EstaCompleta" value="true" class="done-checkbox">
+                </td>
+                <td>@item.Nome</td>
+                <td>@String.Format("{0:dd/MM/yyyy}",@item.DataConclusao)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="panel-footer add-item-form">
+        <form asp-controller="Tarefas" asp-action="AdicionarItemTarefa" method="GET">
+            <button type="submit" class="btn btn-success">Incluir Nova Tarefa</button>
+        </form>
+    </div>
+</div>
